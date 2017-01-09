@@ -115,7 +115,7 @@ Pull in Bootstrap
 
 ```
 # in ./backend
-V=3.7.7
+V=3.3.7
 wget https://github.com/twbs/bootstrap/releases/download/v${V}/bootstrap-${V}-dist.zip
 unzip -t bootstrap-${V}-dist.zip
 unzip bootstrap-${V}-dist.zip
