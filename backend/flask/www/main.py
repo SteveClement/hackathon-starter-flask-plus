@@ -30,20 +30,20 @@ def landing_page():
 @app.route('/beta-signup', methods=['POST'])
 ## @requires_auth
 def beta_signup():
-    print "send_beta-signup"
+    print("send_beta-signup")
 
     err=False
     name = request.values.get('name', '')
     if len(name)==0: 
-        flash(u'Please give us your name', 'beta')
+        flash('Please give us your name', 'beta')
         err=True
     email = request.values.get('email', '')
     if len(email)==0: 
-        flash(u'Please give us your email address', 'beta')
+        flash('Please give us your email address', 'beta')
         err=True
 
     if err:
-        print "send_beta-signup FAILED : re-ask"
+        print("send_beta-signup FAILED : re-ask")
         return redirect(url_for('landing_page', name=name, email=email))
 
     text = render_template('beta-signup.email.haml', name=name, email=email, is_plain_text=True)
@@ -58,9 +58,9 @@ def beta_signup():
       text, html
     )
     if sent:
-        print "send_reset_link DONE"
+        print("send_reset_link DONE")
     else:
-        print "send_reset_link FAIL"
+        print("send_reset_link FAIL")
 
     return render_template('beta-signup.thankyou.haml', name=name, email=email)
     
@@ -77,7 +77,7 @@ def coming_soon():
     
 @requires_auth
 def home_page_room_list():
-    print "User.id=%4d Email='%s' :: bundle='%s'" % (flask.g.user.id, flask.g.user.email, flask.g.user.bundle, )
+    print("User.id=%4d Email='%s' :: bundle='%s'" % (flask.g.user.id, flask.g.user.email, flask.g.user.bundle, ))
     
     projects = []
     for i,proj in enumerate(sorted(flask.g.user.list_projects('access'))):
@@ -115,8 +115,8 @@ def privacy():
     
 @app.errorhandler(404)
 def page_not_found(e):
-    print "404 for HOST=%s" %(request.host.lower(),)
-    print "404 for PATH=%s" %(request.path, )
+    print("404 for HOST=%s" %(request.host.lower(),))
+    print("404 for PATH=%s" %(request.path, ))
     flask.g.user = User(Site.tag_main, 'NonExistent@LandingPage.com', 'Not logged in')  # Creates a user with id=None
     #return render_template('404.haml'), 404
     return "", 404

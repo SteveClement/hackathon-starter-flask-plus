@@ -165,9 +165,9 @@ class User(db.orm):
 
     def list_projects(self, permission=''):
         if permission:
-            return [proj for proj in self.bundle['perms'].iterkeys() if permission in self.bundle['perms'][proj]]
+            return [proj for proj in self.bundle['perms'].keys() if permission in self.bundle['perms'][proj]]
         else:
-            return [proj for proj in self.bundle['perms'].iterkeys()]
+            return [proj for proj in self.bundle['perms'].keys()]
             
     # @staticmethod
     def mailto(self, email=None):

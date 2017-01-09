@@ -6,7 +6,7 @@ import re  # For analysing the mail message
 # Set up the database before importing the Flask app.
 TEST_DB = os.path.join(os.path.dirname(os.path.realpath(__file__)),'sqlite_hackathon_test.db')
 os.environ["FLASK_OVERRIDE_DB"] = "sqlite:///%s" % (TEST_DB, )
-print "DB path : %s" % (TEST_DB,)
+print("DB path : %s" % (TEST_DB,))
 
 import www
 
@@ -125,7 +125,7 @@ class HackathonTestCase(unittest.TestCase):
         
         reset_link = '/user/reset/%d/%s' % (int(m.group(1)), m.group(2))
         
-        print "RESET LINK = %s" % (reset_link, )
+        print("RESET LINK = %s" % (reset_link, ))
         
         ## Go to invited page with a bad link
         rv = self.app.get(reset_link+'XXYY')

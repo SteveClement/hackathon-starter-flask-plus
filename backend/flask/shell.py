@@ -6,7 +6,7 @@ import os
 # Set up the database before importing the Flask app.
 TEST_DB = os.path.join(os.path.dirname(os.path.realpath(__file__)),'sqlite_hackathon_shell.db')
 os.environ["FLASK_OVERRIDE_DB"] = "sqlite:///%s" % (TEST_DB, )
-print "DB path : %s" % (TEST_DB,)
+print("DB path : %s" % (TEST_DB,))
 
 import www
 # This forces the database to be linked to the tempfile

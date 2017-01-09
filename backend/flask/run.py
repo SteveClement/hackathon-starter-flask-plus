@@ -7,7 +7,7 @@ PORT = 7882          # Arbitrary port (epoch accessible from outside)
 import platform
 hostname = platform.uname()[1]
 
-print "HOSTNAME = %s" % hostname
+print("HOSTNAME = %s" % hostname)
 
 # Better default choice than True
 debug=False

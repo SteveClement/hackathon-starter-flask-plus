@@ -25,33 +25,33 @@ def admin_site():
         if request.form['name']:
             site.set_data('', 'name', request.form['name'])
         else:
-            flash(u'Error: you have to provide a company name for your site', 'section_header')
+            flash('Error: you have to provide a company name for your site', 'section_header')
             
         if request.form['admin_name']:
             site.set_data('', 'admin_name', request.form['admin_name'])
         else:
-            flash(u'Error: you have to provide a contact name for your site', 'section_header')
+            flash('Error: you have to provide a contact name for your site', 'section_header')
 
         if request.form['admin_phone']:
             site.set_data('', 'admin_phone', request.form['admin_phone'])
         else:
-            flash(u'Error: you have to provide a contact phone number for your site', 'section_header')
+            flash('Error: you have to provide a contact phone number for your site', 'section_header')
 
         if request.form['admin_email']:
             site.set_data('', 'admin_email', request.form['admin_email'])
         else:
-            flash(u'Error: you have to provide a contact email address for your site', 'section_header')
+            flash('Error: you have to provide a contact email address for your site', 'section_header')
 
 
         if request.form['about']:
             site.set_data('', 'about', request.form['about'])
         else:
-            flash(u'Error: you have to have some \'about\' text', 'section_footer')
+            flash('Error: you have to have some \'about\' text', 'section_footer')
             
         if request.form['footer']:
             site.set_data('', 'footer', request.form['footer'])
         else:
-            flash(u'Error: you have to have some footer text', 'section_footer')
+            flash('Error: you have to have some footer text', 'section_footer')
             
         Site.commit()
             
@@ -83,21 +83,21 @@ def admin_room_add():
         form['name']=proj_new
         
         if len(proj_new)==0: 
-            flash(u'Error: you have to provide a project room name', 'section_create')
+            flash('Error: you have to provide a project room name', 'section_create')
         elif proj_new == '..':
-            flash(u'Error: invalid project room name', 'section_create')
+            flash('Error: invalid project room name', 'section_create')
         else:
             valid=True
             for c in '\\/*?#\'\"':
                 if c in proj_new:
                     valid=False
-                    flash(u'Error: project room name contains invalid character " %s "' % (c,), 'section_create')
+                    flash('Error: project room name contains invalid character " %s "' % (c,), 'section_create')
             
             if valid:
                 # Check whether this exists already
                 if proj_new in flask.g.user.list_projects():
                     valid=False
-                    flash(u'Error: project room already exists', 'section_create')
+                    flash('Error: project room already exists', 'section_create')
                     
             if valid:
                 # Create entries for this 'siteadmin' user for the new project
@@ -149,19 +149,19 @@ def admin_room_edit(proj):
         if request.form['summary']:
             site.set_data(proj, 'summary', request.form['summary'])
         else:
-            flash(u'Error: you have to provide a summary for each room', 'section_summary')
+            flash('Error: you have to provide a summary for each room', 'section_summary')
             
         if request.form['invite_subject']:
             site.set_data(proj, 'invite_subject', request.form['invite_subject'])
         else:
-            flash(u'Error: you should add an email invitation subject line for each room (can be personalized later)', 'section_invite')
+            flash('Error: you should add an email invitation subject line for each room (can be personalized later)', 'section_invite')
             
         site.set_data(proj, 'watermark', request.form['watermark'])
             
         if request.form['invite_body']:
             site.set_data(proj, 'invite_body', request.form['invite_body'])
         else:
-            flash(u'Error: you should add boilerplate email invitation body text for each room (can be personalized later)', 'section_invite')
+            flash('Error: you should add boilerplate email invitation body text for each room (can be personalized later)', 'section_invite')
             
         Site.commit()
             
@@ -187,7 +187,7 @@ def admin_users(user_id=0):
         user = None
     else:
         user = User.get(user_id)
-        print "Email='%s' :: perms='%s'" % (user.email, user.bundle['perms'], )
+        print("Email='%s' :: perms='%s'" % (user.email, user.bundle['perms'], ))
         
     rights = ['access', 'invite', 'files', 'admin']
     projects=[]
@@ -204,18 +204,18 @@ def admin_users(user_id=0):
             if request.form['email']:
                 if user.email != request.form['email']:
                     user.email = request.form['email']
-                    flash(u'Email address updated', 'section_success')
+                    flash('Email address updated', 'section_success')
             else:
                 valid = False
-                flash(u'Error: you have to provide an email address', 'section_edit')
+                flash('Error: you have to provide an email address', 'section_edit')
                 
             if request.form['name']:
                 if user.name != request.form['name']:
                     user.name = request.form['name']
-                    flash(u'User name updated', 'section_success')
+                    flash('User name updated', 'section_success')
             else:
                 valid = False
-                flash(u'Error: you have to provide the user\'s name', 'section_edit')
+                flash('Error: you have to provide the user\'s name', 'section_edit')
             
             if user.id != flask.g.user.id:  # Don't alter your own permissions!
                 update = False
@@ -231,7 +231,7 @@ def admin_users(user_id=0):
                                 update = True
     
                 if update:
-                    flash(u'Access Rights updated', 'section_success')
+                    flash('Access Rights updated', 'section_success')
                 
             if valid:
                 User.commit()
@@ -242,7 +242,7 @@ def admin_users(user_id=0):
             if 'password_reset' in request.form:
                 User.commit()  # In case the email address was updated
                 send_reset_link(user)
-                flash(u'Password Reset Email : Sent', 'section_success')
+                flash('Password Reset Email : Sent', 'section_success')
 
         form['user_id']=user.id 
         form['name']=user.name
@@ -294,22 +294,22 @@ def admin_invite(proj):
         
         form['invite_email'] = request.form['invite_email'].lower().strip()
         if len(form['invite_email'])==0:
-            flash(u'Error: you have to provide an email address', 'section_invite')
+            flash('Error: you have to provide an email address', 'section_invite')
             valid=False
             
         form['invite_name'] = request.form['invite_name'].strip()
         if len(form['invite_name'])==0:
-            flash(u'Error: you have to provide the user\'s name', 'section_invite')
+            flash('Error: you have to provide the user\'s name', 'section_invite')
             valid=False
         
         form['invite_subject'] = request.form['invite_subject']
         if len(form['invite_subject'])==0:
-            flash(u'Error: you have to provide text for the email subject line', 'section_invite')
+            flash('Error: you have to provide text for the email subject line', 'section_invite')
             valid=False
         
         form['invite_body'] = request.form['invite_body']
         if len(form['invite_body'])==0:
-            flash(u'Error: you have to provide text for the email body', 'section_invite')
+            flash('Error: you have to provide text for the email body', 'section_invite')
             valid=False
         
         if valid :
@@ -347,9 +347,9 @@ def admin_invite(proj):
                     
                     Audit(flask.g, proj, '/admin/invite', email_to, result='sent').write()
                     if sent :
-                        flash(u'Email sent to %s !' % (email_to,), 'section_sent')
+                        flash('Email sent to %s !' % (email_to,), 'section_sent')
                     else:
-                        flash(u'Email NOT sent to %s !' % (email_to,), 'section_invite')  # Looks like an error
+                        flash('Email NOT sent to %s !' % (email_to,), 'section_invite')  # Looks like an error
                     
                     # Blank out the name and email addresses
                     form['invite_name']=''
@@ -438,7 +438,7 @@ def subsite_upload(proj, path=''):
     path = os.path.normpath(path)
     if path == '.': path=''
         
-    print "Uploading to project(%s) : %s" % (proj, path, )
+    print("Uploading to project(%s) : %s" % (proj, path, ))
     #Audit(flask.g, proj, '/data', path, result='').write()
     
     if not flask.g.user.has_permission(proj, 'files'):
@@ -446,7 +446,7 @@ def subsite_upload(proj, path=''):
         return home_page()
     
     full_path = DataRoom(flask.g.user, proj).absolute_filename(path)
-    print "Full Path : %s" % (full_path,)
+    print("Full Path : %s" % (full_path,))
     if not os.path.isdir(full_path):
         return "FAILURE"
     

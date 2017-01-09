@@ -30,7 +30,7 @@ def before_request():
         
     flask.g.site = Site.query().filter_by(tag=site_tag).first()
     if flask.g.site is None:
-        print "FAILED TO FIND SITE_TAG : DEFAULTING"
+        print("FAILED TO FIND SITE_TAG : DEFAULTING")
         # Default if all else fails
         flask.g.site = Site.query().filter_by(tag=Site.tag_main).first()
     
@@ -42,7 +42,7 @@ def before_request():
     #session.pop('hash')
     if 'hash' not in session:
         session['hash'] = ''.join([ '%02x' % ord(ch) for ch in urandom(4) ])
-        print "Created session hash '%s'" % (session['hash'],)
+        print("Created session hash '%s'" % (session['hash'],))
     flask.g.hash = session['hash']
         
     flask.g.ip = request.remote_addr
@@ -82,15 +82,15 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         user = User.get_if_password_valid(flask.g.site.tag, email, request.form['password'])
-        print "Trying to Login : %s - %s" % (flask.g.site.tag, email, )
+        print("Trying to Login : %s - %s" % (flask.g.site.tag, email, ))
         if user:
-            print "Trying to Login - SUCCESS"
+            print("Trying to Login - SUCCESS")
             flask.g.user = user # Fix up g, so that Audit works
             Audit(flask.g, '', '/user/login', email, result='Success').write()
             session['userid']=user.id
             return redirect(next_url)
         else:
-            print "Trying to Login - FAILURE"
+            print("Trying to Login - FAILURE")
             Audit(flask.g, '', '/user/login', email, result='Failure').write()
             flash("Email and password don't match", 'error')
     
@@ -103,7 +103,7 @@ def reset():
     if request.method == 'POST':
         email = request.form['email']
         user = User.get_from_email(flask.g.site.tag, email)
-        print "Password Reset request : %s - %s" % (flask.g.site.tag, email, )
+        print("Password Reset request : %s - %s" % (flask.g.site.tag, email, ))
         if user:
             Audit(flask.g, '', '/user/reset', email, result='Success').write()
             send_reset_link(user)
@@ -118,7 +118,7 @@ def reset():
    
 
 def send_reset_link(user):
-    print "send_reset_link"
+    print("send_reset_link")
     #Audit(flask.g, '', url_here, '', result='Invite start').write()
     if user is None: return
     reset_link = url_for('user_reset_password_with_token', _external=True, user_id=user.id, token=user.invitation_token())
@@ -134,9 +134,9 @@ def send_reset_link(user):
       text, html
     )
     if sent:
-        print "send_reset_link DONE"
+        print("send_reset_link DONE")
     else:
-        print "send_reset_link FAIL"
+        print("send_reset_link FAIL")
 
 def check_password_acceptable(path, user, p1, p2):
     valid = True
@@ -242,23 +242,23 @@ def edit_profile():
             user.name = request.form['name']
         else:
             valid = False
-            flash(u'Error: you have to provide a contact name', 'error')
+            flash('Error: you have to provide a contact name', 'error')
 
         if request.form['email']:
             user.email = request.form['email']
         else:
             valid = False
-            flash(u'Error: you have to provide a contact email', 'error')
+            flash('Error: you have to provide a contact email', 'error')
             
         if request.form['company']:
             user.set_data('company', request.form['company'])
         else:
-            flash(u'Please provide a company name', 'warning')
+            flash('Please provide a company name', 'warning')
             
         if request.form['phone']:
             user.set_data('phone', request.form['phone'])
         else:
-            flash(u'Please provide a phone number', 'warning')
+            flash('Please provide a phone number', 'warning')
             
         if request.form['mobile']:
             user.set_data('mobile', request.form['mobile'])
@@ -268,7 +268,7 @@ def edit_profile():
             User.commit()
             if next_url == here:  # only flash if we're coming back here...
                 Audit(flask.g, '', '/user/profile', '', result='Update Success').write()
-                flash(u'Profile successfully updated', 'success')
+                flash('Profile successfully updated', 'success')
             return redirect(next_url)
     
     form['name']=user.name
@@ -285,7 +285,7 @@ def edit_profile():
 def logout():
     next_url = request.args.get('next_url', '/')
     session.pop('userid', None)
-    flash(u'You have been signed out')
+    flash('You have been signed out')
     Audit(flask.g, '', '/user/logout', '', result='').write()
     return redirect(next_url)
 
