@@ -5,7 +5,7 @@ Pull in Reveal.js
 ```
 # in ./presentation
 .... TODO ...
-V=2.6.2
+V=3.3.0
 wget https://github.com/hakimel/reveal.js/archive/${V}.zip
 unzip -t ${V}.zip
 unzip ${V}.zip
