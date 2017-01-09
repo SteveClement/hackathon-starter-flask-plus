@@ -5,7 +5,7 @@ yum install python-virtualenv python-pip
 
 ```
 ##virtualenv --no-site-packages env
-virtualenv env
+virtualenv -p python3 env
 . ../env/bin/activate
 pip install Flask
 pip install Flask-SQLAlchemy
@@ -115,7 +115,7 @@ Pull in Bootstrap
 
 ```
 # in ./backend
-V=3.2.0
+V=3.7.7
 wget https://github.com/twbs/bootstrap/releases/download/v${V}/bootstrap-${V}-dist.zip
 unzip -t bootstrap-${V}-dist.zip
 unzip bootstrap-${V}-dist.zip
@@ -128,8 +128,8 @@ Pull in JQuery (compatible, older version)
 
 ```
 # in ./backend
-V=1.11.1
-wget http://code.jquery.com/jquery-${V}.min.js
+V=3.1.1
+wget https://code.jquery.com/jquery-${V}.min.js
 mv jquery-${V}.min.js flask/www/static/js/
 ```
 
@@ -138,8 +138,8 @@ Pull in JQuery Mobile
 
 ```
 # in ./backend
-V=1.4.3
-wget http://jquerymobile.com/resources/download/jquery.mobile-${V}.zip
+V=1.4.5
+wget https://jquerymobile.com/resources/download/jquery.mobile-${V}.zip
 unzip -t jquery.mobile-${V}.zip
 unzip -d jquery jquery.mobile-${V}.zip
 cp -R jquery/*.js flask/www/static/js/
@@ -168,8 +168,8 @@ Pull in D3.js (if required)
 
 ```
 # in ./backend
-wget http://d3js.org/d3.v3.min.js
-mv d3.v3.min.js flask/www/static/js/
+wget https://d3js.org/d3.v4.min.js
+mv d3.v4.min.js flask/www/static/js/
 ```
 
 Pull in External Theme (example)
